@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Blackjack Counter</title>
+
+<style>
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    margin: 0;
+    padding: 20px;
+    background: #111;
+    color: white;
+}
+
+.light {
+    background: #f5f5f5;
+    color: black;
+}
+
+h1 { margin-bottom: 10px; }
+
+.count {
+    font-size: 70px;
+    font-weight: bold;
+}
+
+.true {
+    font-size: 26px;
+    margin-top: 10px;
+}
+
+button {
+    font-size: 22px;
+    padding: 15px 25px;
+    margin: 10px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.plus { background: #2ecc71; color: white; }
+.zero { background: #888; color: white; }
+.minus { background: #e74c3c; color: white; }
+.reset { background: #ff4757; color: white; }
+.toggle { background: #3498db; color: white; }
+
+.slider {
+    width: 80%;
+    margin-top: 20px;
+}
+
+/* Trademark footer */
+.trademark {
+    margin-top: 30px;
+    text-align: center;
+    color: inherit;
+}
+.trademark .rk {
+    font-size: 64px;
+    font-weight: 900;
+    line-height: 0.9;
+}
+.trademark .royalz {
+    font-size: 20px;
+    margin-top: 6px;
+    opacity: 0.9;
+}
+</style>
+</head>
+
+<body>
+
+<h1>Blackjack Counter</h1>
+
+<div class="count" id="running">0</div>
+<div class="true" id="true">True Count: 0</div>
+
+<div>
+    <button class="plus" onclick="update(1)">+1</button>
+    <button class="zero" onclick="update(0)">0</button>
+    <button class="minus" onclick="update(-1)">-1</button>
+</div>
+
+<h3>Decks Remaining</h3>
+<input type="range" min="0.5" max="8" step="0.5" value="6" id="deckSlider" class="slider" oninput="updateDeck(this.value)">
+<p id="deckVal">6 decks</p>
+
+<div>
+    <button class="reset" onclick="reset()">Reset</button>
+    <button class="toggle" onclick="toggleMode()">Toggle Dark/Light</button>
+</div>
+
+
+<script>
+let running = 0;
+let decks = 6;
+
+function update(val){
+    running += val;
+    render();
+}
+
+function updateDeck(val){
+    decks = parseFloat(val);
+    document.getElementById("deckVal").innerText = decks + " decks";
+    render();
+}
+
+function render(){
+    document.getElementById("running").innerText = running;
+    let trueCount = decks > 0 ? (running/decks).toFixed(2) : running;
+    document.getElementById("true").innerText = "True Count: " + trueCount;
+}
+
+function reset(){
+    running = 0;
+    decks = 6;
+    document.getElementById("deckSlider").value = 6;
+    updateDeck(6);
+}
+
+function toggleMode(){
+    document.body.classList.toggle("light");
+}
+</script>
+
+<!-- Trademark block -->
+<div class="trademark" aria-label="Trademark">
+    <div class="rk">RK</div>
+    <div class="royalz">Royalz Kasino</div>
+</div>
+
+</body>
+</html>
